@@ -9,7 +9,7 @@ usage:
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get install git-core
-$ git clone git@github.com:abarbanell/hadoop-setup.git
+$ git clone https://github.com/abarbanell/hadoop-setup.git
 $ cd hadoop-setup
 $ ./setup.sh
 ```

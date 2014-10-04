@@ -1,0 +1,3 @@
+# gitignore temporary directory created during execution of setup.sh
+tmp/
+

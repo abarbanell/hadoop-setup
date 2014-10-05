@@ -5,7 +5,13 @@ echo
 
 HADOOP_MIRROR="http://mirror.switch.ch"
 HADOOP_VERSION="2.5.1"
-PWD=`pwd`
+HADOOP_DIR=hadoop-${HADOOP_VERSION}
+HADOOP_TAR=${HADOOP_DIR}.tar.gz
+HADOOP_PREFIX=/usr/local
+HADOOP_PATH=${HADOOP_PREFIX}/${HADOOP_DIR}
+
+SETUPDIR=`pwd`
+echo "PWD set to $PWD"
 
 echo '>>>>' create locale if it does not exist
 
@@ -31,20 +37,39 @@ sudo apt-get -y install rsync
 
 echo  '>>>>' get Hadoop package
 
-HADOOP_DIR=hadoop-${HADOOP_VERSION}
-HADOOP_TAR=${HADOOP_DIR}.tar.gz
 
 sudo rm -rf tmp
 mkdir -p tmp 
 cd tmp
 wget ${HADOOP_MIRROR}/mirror/apache/dist/hadoop/common/stable/${HADOOP_TAR}
-tar xvozf ${HADOOP_TAR}
-sudo rm -rf /opt/${HADOOP_DIR}
+tar xozf ${HADOOP_TAR}
+sudo rm -rf ${HADOOP_PATH}
 sudo chown -R bin.bin ${HADOOP_DIR}
-sudo mv ${HADOOP_DIR} /opt
-sudo rm -rf /opt/hadoop
-sudo ln -s /opt/${HADOOP_DIR} /opt/hadoop
+sudo mv ${HADOOP_DIR} ${HADOOP_PATH}
+sudo rm -rf ${HADOOP_PREFIX}/hadoop
+sudo ln -s ${HADOOP_PATH} ${HADOOP_PREFIX}/hadoop
+cd ${SETUPDIR}
+echo cd ${SETUPDIR}
 
-echo TODO: set environment
+echo '>>>>' set up environment for pseudo-distributed
+
+for file in core-site.xml hdfs-site.xml
+do
+	sudo cp conf/${file} ${HADOOP_PATH}/etc/hadoop
+	sudo chown bin.bin ${HADOOP_PATH}/etc/hadoop/${file}
+	echo copied ${file} to ${HADOOP_PATH}/etc/hadoop
+done
+
+echo TODO: setup ssh for localhost
+
+ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
+cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+
+echo TODO: format HDFS
+
+${HADOOP_PATH}/bin/hdfs namenode -format
+
+echo TODO: create startup files
+
 
 

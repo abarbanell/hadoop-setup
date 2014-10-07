@@ -59,7 +59,17 @@ do
 	sudo chown bin.bin ${HADOOP_PATH}/etc/hadoop/${file}
 	echo copied ${file} to ${HADOOP_PATH}/etc/hadoop
 done
+ 
+sudo cp ${HADOOP_PATH}/etc/hadoop/hadoop-env.sh ${HADOOP_PATH}/etc/hadoop/hadoop-env.sh.orig
 
+sudo sh -c "sed -e 's/^export JAVA_HOME=\${JAVA_HOME}/export JAVA_HOME=\/usr\/lib\/jvm\/java-7-openjdk-amd64/' <${HADOOP_PATH}/etc/hadoop/hadoop-env.sh.orig >${HADOOP_PATH}/etc/hadoop/hadoop-env.sh " 
+
+sudo sh -c "cat >> ${HADOOP_PATH}/etc/hadoop/hadoop-env.sh <<EOF
+	# our installation directory is /usr/local/hadoop
+	export HADOOP_PREFIX=/usr/local/hadoop
+
+EOF
+"
 echo TODO: setup ssh for localhost
 
 ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa

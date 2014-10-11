@@ -55,6 +55,10 @@ echo '>>>>' setup user and group
 
 sudo adduser --system --group --no-create-home hadoop
 
+ME=`id -n -u`
+sudo adduser $ME hadoop
+
+
 echo '>>>>' set up environment for pseudo-distributed
 
 for file in core-site.xml hdfs-site.xml

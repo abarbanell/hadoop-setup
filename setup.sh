@@ -51,6 +51,10 @@ sudo ln -s ${HADOOP_PATH} ${HADOOP_PREFIX}/hadoop
 cd ${SETUPDIR}
 echo cd ${SETUPDIR}
 
+echo '>>>>' setup user and group
+
+sudo adduser --system --group --no-create-home hadoop
+
 echo '>>>>' set up environment for pseudo-distributed
 
 for file in core-site.xml hdfs-site.xml
@@ -70,10 +74,17 @@ sudo sh -c "cat >> ${HADOOP_PATH}/etc/hadoop/hadoop-env.sh <<EOF
 
 EOF
 "
+echo '>>>>' setup LOGFILE
+
+sudo mkdir ${HADOOP_PATH}/logs
+sudo chown hadoop.hadoop ${HADOOP_PATH}/logs
+sudo chmod 775 ${HADOOP_PATH}/logs
+
+
 echo TODO: setup ssh for localhost
 
-ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
-cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 echo TODO: format HDFS
 

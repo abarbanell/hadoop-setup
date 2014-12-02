@@ -14,8 +14,9 @@ $ cd hadoop-setup
 $ ./setup.sh
 ```
 
-Status: (2014-10-05) works on Azure Linux image, installs hadoop software and prerequisiste.
+Status: (2014-12-02) works on Rackspace and Azure Linux image, installs hadoop software and prerequisiste.
 
-But the configuartion of cluster is not yet done, also the automatic startup of hadoop services is not done yet.
+But the the automatic startup of hadoop services is not done yet. So it leaves the clusetr installed (and HDFS formatted) but nothing running.
+
 
 

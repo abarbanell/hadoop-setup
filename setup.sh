@@ -3,8 +3,8 @@
 echo setup a hadoop single node cluster
 echo 
 
-HADOOP_MIRROR="http://mirror.switch.ch"
-HADOOP_VERSION="2.5.1"
+HADOOP_MIRROR="http://mirror.switch.ch/mirror/apache/dist/hadoop/common"
+HADOOP_VERSION="2.6.0"
 HADOOP_DIR=hadoop-${HADOOP_VERSION}
 HADOOP_TAR=${HADOOP_DIR}.tar.gz
 HADOOP_PREFIX=/usr/local
@@ -41,7 +41,7 @@ echo  '>>>>' get Hadoop package
 sudo rm -rf tmp
 mkdir -p tmp 
 cd tmp
-wget ${HADOOP_MIRROR}/mirror/apache/dist/hadoop/common/stable/${HADOOP_TAR}
+wget ${HADOOP_MIRROR}/${HADOOP_DIR}/${HADOOP_TAR}
 tar xozf ${HADOOP_TAR}
 sudo rm -rf ${HADOOP_PATH}
 sudo chown -R bin.bin ${HADOOP_DIR}
@@ -85,16 +85,17 @@ sudo chown hadoop.hadoop ${HADOOP_PATH}/logs
 sudo chmod 775 ${HADOOP_PATH}/logs
 
 
-echo TODO: setup ssh for localhost
+echo '>>>>' setup ssh for localhost
 
 ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-echo TODO: format HDFS
+echo '>>>>' format HDFS
 
 ${HADOOP_PATH}/bin/hdfs namenode -format
 
 echo TODO: create startup files
 
 
+echo TODO: start instance
 

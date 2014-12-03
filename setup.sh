@@ -30,10 +30,11 @@ EOF
 
 . ~/.bashrc
 
-echo  '>>>>' get ssh and rsync if not already there
+echo  '>>>>' get ssh, rsync, 7z if not already there
 
 sudo apt-get -y install ssh
 sudo apt-get -y install rsync
+sudo apt-get -y install p7zip
 
 echo  '>>>>' get Hadoop package
 
